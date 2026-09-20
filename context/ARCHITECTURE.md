@@ -21,12 +21,12 @@ Where should entries live now that they must survive a cleared cache?
 
 | Criterion | Weight | Build (Worker + D1) | Buy (hosted BaaS) | Delegate (AI builder hosts it) |
 |---|---|---|---|---|
-| Cost to start | | | | |
-| Cost to maintain | | | | |
-| Time to working | | | | |
-| Inspectability | | | | |
-| Switching cost | | *scored from Session B experience* | | |
-| Fit to spec | | | | |
+| Cost to start | 5 | 5 | 4 | 5 |
+| Cost to maintain | 4 | 5 | 2 | 5 |
+| Time to working | 4 | 4 | 4 | 5 |
+| Inspectability | 5 | 5 | 1 | 2 |
+| Switching cost | 3 | 5 (*scored from Session B experience*) | 2 | 4 |
+| Fit to spec | 4 | 5 | 3 | 3 |
 | **Weighted total** | | | | |
 
 ## ADR-002: Entries move from localStorage to Cloudflare D1
