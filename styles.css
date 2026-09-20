@@ -2,62 +2,161 @@
    Presentation only. The tokens below should match context/STYLE.md;
    when you change one, change both. */
 :root {
-  --color-primary: #051E39;
-  --color-accent: #B39051;
-  --color-background: #FFFFFF;
-  --color-text: #1A1A1A;
-  --color-error: #9B2C2C;
-  --font-body: Roboto, Arial, sans-serif;
-  --font-heading: "Roboto Slab", Georgia, serif;
-  --space-unit: 8px;
-  --radius: 4px;
+  --primary-color: #2b6cb0;
+  --primary-hover: #1a4971;
+  --bg-color: #f7fafc;
+  --card-bg: #ffffff;
+  --text-color: #2d3748;
+  --border-color: #e2e8f0;
+  --success-color: #2f855a;
+  --error-color: #c53030;
 }
-* { box-sizing: border-box; }
+
 body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.5;
   margin: 0;
-  font-family: var(--font-body);
-  font-size: 16px;
-  color: var(--color-text);
-  background: var(--color-background);
+  padding: 2rem 1rem;
 }
-main {
-  max-width: 640px;
+
+.app-container {
+  max-width: 600px;
   margin: 0 auto;
-  padding: calc(var(--space-unit) * 4) calc(var(--space-unit) * 2);
 }
-h1 {
-  font-family: var(--font-heading);
-  color: var(--color-primary);
-  margin: 0 0 var(--space-unit) 0;
+
+.app-header {
+  text-align: center;
+  margin-bottom: 2rem;
 }
-.lede { color: #555; margin: 0 0 calc(var(--space-unit) * 3) 0; }
-form { display: flex; flex-wrap: wrap; gap: var(--space-unit); align-items: end; }
-label { flex-basis: 100%; font-weight: bold; }
-input {
-  flex: 1;
-  min-width: 200px;
-  padding: var(--space-unit);
-  font: inherit;
-  border: 1px solid #BBB;
-  border-radius: var(--radius);
+
+.app-header h1 {
+  margin: 0;
+  color: var(--primary-color);
 }
-button {
-  padding: var(--space-unit) calc(var(--space-unit) * 2);
-  font: inherit;
-  color: #fff;
-  background: var(--color-primary);
-  border: 0;
-  border-radius: var(--radius);
+
+.app-header p {
+  margin-top: 0.5rem;
+  color: #718096;
+}
+
+.form-section, .reviews-section {
+  background-color: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+}
+
+input[type="text"], textarea, input[type="file"] {
+  padding: 0.6rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+input[type="file"] {
+  background-color: #edf2f7;
   cursor: pointer;
 }
-button:hover { background: #0a2f5a; }
-.status { min-height: 1.5em; margin: var(--space-unit) 0; color: var(--color-error); }
-ul { list-style: none; padding: 0; margin: calc(var(--space-unit) * 2) 0 0 0; }
-li {
-  padding: var(--space-unit) 0;
-  border-bottom: 1px solid #E5E5E5;
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-unit);
+
+#image-preview-container {
+  margin-bottom: 1.25rem;
+  text-align: center;
 }
-li time { color: #777; font-size: 14px; white-space: nowrap; }
+
+#image-preview {
+  max-width: 100%;
+  max-height: 250px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  object-fit: cover;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  background-color: var(--primary-hover);
+}
+
+#save-status {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 500;
+}
+
+#save-status.success {
+  background-color: #c6f6d5;
+  color: var(--success-color);
+}
+
+#save-status.error {
+  background-color: #fed7d7;
+  color: var(--error-color);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.reviews-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.review-card {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: #ffffff;
+}
+
+.review-card-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  color: var(--primary-color);
+}
+
+.review-card-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--border-color);
+}
+
+.review-card-text {
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+  color: var(--text-color);
+}
