@@ -1,6 +1,6 @@
 # Architecture
 
-Status: ACTIVE in Module 3.
+**Status:** ACTIVE in Module 3.
 
 ## Gate
 
@@ -48,15 +48,15 @@ At least one thing that got harder.
 
 ## ADR-001
 
-Title and date: JavaScript for Text Reviews Feature (September 15, 2026)
+**Title and date:** JavaScript for Text Reviews Feature (September 15, 2026)
 
-Status: Accepted
+**Status:** Superseded by ADR-002
 
-Door / concrete acquisition and execution choice: Build
+**Door / concrete acquisition and execution choice:** Build
 
-Context: Users need to type and save text reviews for without spending money or setting up a complex backend server.
+**Context:** Users need to type and save text reviews for without spending money or setting up a complex backend server.
 
-Decision: Build it in basic form and save the review text directly in the browser.
+**Decision:** Build it in basic form and save the review text directly in the browser.
 
 Consequences and revisit trigger: It is free and can work in the Live Server. They can only exist in the browser and cannot be shared. Revisit it to make it shareable or multi-user.
 
