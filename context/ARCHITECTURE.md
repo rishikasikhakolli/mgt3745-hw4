@@ -4,6 +4,7 @@
 
 ## The Gate: HW4 rerun
 *Name hard constraints and three concrete options. Weights and scores use 1–5; a score of 5 always means most favorable. Define 1/3/5 anchors. Multiply weights by scores and sum. Record estimates and run one sensitivity check.*
+
 Where should entries live now that they must survive a cleared cache?
 
 | Criterion | Weight | Build (Worker + D1) | Buy (hosted BaaS) | Delegate (AI builder hosts it) |
@@ -14,7 +15,7 @@ Where should entries live now that they must survive a cleared cache?
 | Inspectability | 5 | 5 | 1 | 2 |
 | Switching cost | 3 | 5 (*scored from Session B experience*) | 2 | 4 |
 | Fit to spec | 4 | 5 | 3 | 3 |
-| **Weighted total** | | | | |
+| **Weighted total** | | **118** | **70** | **88** |
 
 ## ADR-002: Entries move from localStorage to Cloudflare D1
 
