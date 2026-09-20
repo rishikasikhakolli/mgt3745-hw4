@@ -1,26 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Entries</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travlr - Photo Review</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
 </head>
 <body>
-  <main>
-    <h1>Entries</h1>
-    <p class="lede">Replace this heading and copy with your HW3 feature. Structure lives here; presentation in styles.css; behavior and data in app.js.</p>
+  <main class="app-container">
+    <header class="app-header">
+      <h1>Review your Travels</h1>
+      <p>Upload a photo of your spot and leave your review below.</p>
+    </header>
 
-    <form id="entry-form">
-      <label for="entry-text">New entry</label>
-      <input id="entry-text" name="text" type="text" autocomplete="off" required>
-      <button type="submit">Save</button>
-    </form>
+    <section class="form-section">
+      <form id="review-form">
+        <!-- Place Name -->
+        <div class="form-group">
+          <label for="spot-name">Spot Name</label>
+          <input type="text" id="spot-name" name="spotName" placeholder="e.g., Cafe de Flore" required>
+        </div>
 
-    <p id="status" class="status" role="status" aria-live="polite"></p>
+        <!-- Upload Photo -->
+        <div class="form-group">
+          <label for="spot-image">Upload Photo</label>
+          <input type="file" id="spot-image" name="spotImage" accept="image/*" required>
+        </div>
 
-    <ul id="entry-list" aria-label="Saved entries"></ul>
+        <!-- Image Preview -->
+        <div id="image-preview-container" class="hidden">
+          <img id="image-preview" alt="Preview of uploaded spot photo">
+        </div>
+
+        <!-- Text Review Box -->
+        <div class="form-group">
+          <label for="review-text">Your Review</label>
+          <textarea id="review-text" name="reviewText" rows="4" placeholder="Write your review here..." required></textarea>
+        </div>
+
+        <button type="submit" id="submit-btn">Save Review</button>
+      </form>
+
+      <!-- Feedback -->
+      <p id="save-status" role="status" aria-live="polite" class="hidden"></p>
+    </section>
+
+    <!-- Photo Feed -->
+    <section class="reviews-section">
+      <h2>Saved Photo Reviews</h2>
+      <p id="empty-state">No photo reviews added yet.</p>
+      <ul id="reviews-list" class="reviews-list"></ul>
+    </section>
   </main>
-  <script src="app.js"></script>
 </body>
 </html>
