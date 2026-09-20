@@ -15,6 +15,37 @@ Name hard constraints and three concrete options. Weights and scores use 1–5; 
 | Switching cost | 3 | 5 | 2 | 4 |
 | Fit to spec | 4 | 5 | 3 | 3 |
 
+## The Gate: HW4 rerun
+
+Where should entries live now that they must survive a cleared cache?
+
+| Criterion | Weight | Build (Worker + D1) | Buy (hosted BaaS) | Delegate (AI builder hosts it) |
+|---|---|---|---|---|
+| Cost to start | | | | |
+| Cost to maintain | | | | |
+| Time to working | | | | |
+| Inspectability | | | | |
+| Switching cost | | *scored from Session B experience* | | |
+| Fit to spec | | | | |
+| **Weighted total** | | | | |
+
+## ADR-002: Entries move from localStorage to Cloudflare D1
+
+**Status:** Proposed
+**Supersedes:** ADR-001
+
+### Context
+What data leaves the browser, to which vendor, under what terms, and who is accountable.
+
+### Decision
+
+### Alternatives considered
+
+### Consequences
+At least one thing that got harder.
+
+### Revisit trigger
+
 ## ADR-001
 
 Title and date: JavaScript for Text Reviews Feature (September 15, 2026)
