@@ -2,21 +2,8 @@
 
 **Status:** ACTIVE in Module 3.
 
-## Gate
-
-Name hard constraints and three concrete options. Weights and scores use 1–5; a score of 5 always means most favorable. Define 1/3/5 anchors. Multiply weights by scores and sum. Record estimates and run one sensitivity check.
-
-| Criterion | Weight | Hand-built option | Existing-service option | AI-assisted build |
-|---|---:|---:|---:|---:|
-| Cost to start | 5 | 5 | 4 | 5 |
-| Cost to maintain | 4 | 5 | 2 | 5 |
-| Time to working | 4 | 4 | 4 | 5 |
-| Inspectability | 5 | 5 | 1 | 2 |
-| Switching cost | 3 | 5 | 2 | 4 |
-| Fit to spec | 4 | 5 | 3 | 3 |
-
 ## The Gate: HW4 rerun
-
+*Name hard constraints and three concrete options. Weights and scores use 1–5; a score of 5 always means most favorable. Define 1/3/5 anchors. Multiply weights by scores and sum. Record estimates and run one sensitivity check.*
 Where should entries live now that they must survive a cleared cache?
 
 | Criterion | Weight | Build (Worker + D1) | Buy (hosted BaaS) | Delegate (AI builder hosts it) |
