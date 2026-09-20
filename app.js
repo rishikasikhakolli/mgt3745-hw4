@@ -12,79 +12,126 @@ const API = "https://mgt3745-hw4.YOUR-SUBDOMAIN.workers.dev";
 // function save(list)  { localStorage.setItem("entries", JSON.stringify(list)); }
 // -------------------------------------------------------------------------
 
-const form = document.getElementById("entry-form");
-const input = document.getElementById("entry-text");
-const list = document.getElementById("entry-list");
-const status = document.getElementById("status");
+const reviewForm = document.getElementById('review-form');
+const spotNameInput = document.getElementById('spot-name');
+const spotImageInput = document.getElementById('spot-image');
+const imagePreviewContainer = document.getElementById('image-preview-container');
+const imagePreview = document.getElementById('image-preview');
+const reviewTextInput = document.getElementById('review-text');
+const saveStatus = document.getElementById('save-status');
+const emptyState = document.getElementById('empty-state');
+const reviewsList = document.getElementById('reviews-list');
 
-function showError(message) {
-  // The user sees it on the page. Nothing is thrown in the console.
-  status.textContent = message;
+const STORAGE_KEY = 'travlr_photo_reviews';
+let currentBase64Image = '';
+
+function loadReviews() {
+  const savedData = localStorage.getItem(STORAGE_KEY);
+  return savedData ? JSON.parse(savedData) : [];
 }
 
-function clearError() {
-  status.textContent = "";
+function saveReviewsToStorage(reviews) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
 }
 
-async function load() {
-  const res = await fetch(API + "/entries");
-  if (!res.ok) { showError("could not load entries"); return []; }
-  return res.json();
-}
+function renderReviews() {
+  reviewsList.textContent = '';
+  const reviews = loadReviews();
 
-async function save(entry) {
-  const res = await fetch(API + "/entries", {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(entry),
+  if (reviews.length === 0) {
+    emptyState.classList.remove('hidden');
+    return;
+  }
+
+  emptyState.classList.add('hidden');
+
+  reviews.forEach((review) => {
+    const card = document.createElement('li');
+    card.className = 'review-card';
+
+    const title = document.createElement('h3');
+    title.className = 'review-card-title';
+    title.textContent = review.spotName;
+
+    const img = document.createElement('img');
+    img.className = 'review-card-img';
+    img.src = review.imageData;
+    img.alt = `Photo of ${review.spotName}`;
+
+    const text = document.createElement('p');
+    text.className = 'review-card-text';
+    text.textContent = review.reviewText;
+
+    card.appendChild(title);
+    card.appendChild(img);
+    card.appendChild(text);
+
+    reviewsList.appendChild(card);
   });
-  if (!res.ok) {
-    // The Worker's 400 path sends a short reason in the body. Show it.
-    const reason = await res.text();
-    showError("could not save: " + (reason || res.status));
-    return false;
-  }
-  return true;
 }
 
-function render(entries) {
-  // Unchanged from HW3. textContent, never innerHTML.
-  // The server does not get to write HTML into your page either.
-  list.replaceChildren();
-  for (const entry of entries) {
-    const li = document.createElement("li");
-    const text = document.createElement("span");
-    text.textContent = entry.text;
-    const when = document.createElement("time");
-    when.textContent = entry.created_at || "";
-    li.append(text, when);
-    list.append(li);
-  }
+function showStatus(message, isSuccess) {
+  saveStatus.textContent = message;
+  saveStatus.className = isSuccess ? 'success' : 'error';
+  saveStatus.classList.remove('hidden');
+
+  setTimeout(() => {
+    saveStatus.classList.add('hidden');
+  }, 3000);
 }
 
-async function refresh() {
-  clearError();
-  try {
-    render(await load());
-  } catch {
-    // The network itself failed (offline, DNS, CORS). fetch throws here.
-    showError("could not reach the server");
-  }
-}
+spotImageInput.addEventListener('change', (event) => {
+  const file = event.target.files[0];
 
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  clearError();
-  const entry = { text: input.value.trim() };
-  try {
-    const ok = await save(entry);
-    if (ok) {
-      input.value = "";
-      await refresh();
-    }
-  } catch {
-    showError("could not reach the server");
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      currentBase64Image = e.target.result;
+      imagePreview.src = currentBase64Image;
+      imagePreviewContainer.classList.remove('hidden');
+    };
+    reader.readAsDataURL(file);
+  } else {
+    currentBase64Image = '';
+    imagePreviewContainer.classList.add('hidden');
   }
 });
 
-refresh();
+reviewForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const spotName = spotNameInput.value.trim();
+  const reviewText = reviewTextInput.value.trim();
+
+  if (!spotName || !currentBase64Image || !reviewText) {
+    showStatus('Please provide a spot name, select an image, and write a review.', false);
+    return;
+  }
+
+  const newReview = {
+    id: Date.now(),
+    spotName: spotName,
+    imageData: currentBase64Image,
+    reviewText: reviewText,
+    createdAt: new Date().toISOString()
+  };
+
+  try {
+    const reviews = loadReviews();
+    reviews.unshift(newReview);
+    saveReviewsToStorage(reviews);
+
+    spotNameInput.value = '';
+    spotImageInput.value = '';
+    reviewTextInput.value = '';
+    currentBase64Image = '';
+    imagePreviewContainer.classList.add('hidden');
+
+    showStatus('Photo review saved successfully!', true);
+    renderReviews();
+  } catch (error) {
+    showStatus('Failed to save review. The photo file may be too large.', false);
+  }
+});
+
+renderReviews();
