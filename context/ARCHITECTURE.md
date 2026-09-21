@@ -37,7 +37,7 @@ Move the text review entry storage from 'localStorage' to a backend API in Cloud
 * **What got harder:** Network reliance and offline availability. Reviews can no longer be submitted or retrieved if the user loses WiFi and the app now requires UI error states to handle it.
   
 ### Revisit trigger
-Revisit this architecture if user volume exceeds Cloudflare’s free tier request limits, if structured relational SQL no longer fits review data requirements, or when multi-tenant user authentication with row-level access permissions is required[cite: 1].
+Revisit this architecture if user volume exceeds Cloudflare’s free tier request limits, if structured relational SQL no longer fits review data requirements, or when multi-tenant user authentication with row-level access permissions is required.
 
 ## ADR-001
 
