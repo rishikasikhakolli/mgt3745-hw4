@@ -22,7 +22,7 @@ Where should entries live now that they must survive a cleared cache?
 **Supersedes:** ADR-001
 
 ### Context
-Data that leaves the browser includes the contents of the review submission, timestamp, and metadata. The vendor is Cloudfare, Inc. It would be under Cloudfare's terms for serverless execution and storage. I am responsible for data governance and making sure data is validated and secure.
+Data that leaves the browser includes the contents of the review submission, timestamp, and metadata. The vendor is Cloudflare, Inc. It would be under Cloudflare's terms for serverless execution and storage. I am responsible for data governance and making sure data is validated and secure.
 
 ### Decision
 Move the text review entry storage from 'localStorage' to a backend API in Cloudflare. The interactions henceforth would occur via HTTP endpoints and parameterized statements to prevent vulnerabilities.
