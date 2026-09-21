@@ -18,6 +18,7 @@ Where should entries live now that they must survive a cleared cache?
 ## ADR-002: Entries move from localStorage to Cloudflare D1
 
 **Status:** Proposed
+
 **Supersedes:** ADR-001
 
 ### Context
