@@ -63,8 +63,8 @@ async function handle(request, env) {
     } catch {
       return new Response("body must be JSON", { status: 400, headers: CORS });
     }
-    if (!body.text) {
-      return new Response("text required", { status: 400, headers: CORS });
+    if (!body.text || !body.text.trim()) {
+      return new Response("text must not be empty", { status: 400, headers: CORS });
     }
     // HW4 Part 3: add one more validation rule here that traces to an
     // EARS unwanted-behavior statement in your FEATURES.md.
@@ -72,6 +72,6 @@ async function handle(request, env) {
       .bind(body.text).run();
     return new Response(null, { status: 201, headers: CORS });
   }
-
+    
   return new Response("not found", { status: 404, headers: CORS });
 }
