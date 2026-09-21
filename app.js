@@ -1,8 +1,11 @@
 // app.js
-// Behavior and data. Three functions: load, save, render. Same shape as HW3.
-// What changed in HW4 is where load and save go: two lines, plus what
-// happens when they fail. Everything else that changes is a consequence of
-// those two lines, and that is what HW4 asks you to write down.
+// Behavior and data. Three functions: load, save, render.
+// HW4: review TEXT is persisted server-side via the Worker/D1 (schema.sql
+// is intentionally one column: text). Spot name and photo are NOT part of
+// that schema this round (see schema.sql comment: "a second table is
+// ADR-003 territory"), so they're kept in localStorage as a client-side
+// convenience only. They will NOT survive a cleared cache; only the
+// review text will. That boundary is the point of this assignment.
 
 // Paste your deployed Worker URL here after `npx wrangler deploy`.
 const API = "https://mgt3745-hw4.YOUR-SUBDOMAIN.workers.dev";
@@ -22,48 +25,81 @@ const saveStatus = document.getElementById('save-status');
 const emptyState = document.getElementById('empty-state');
 const reviewsList = document.getElementById('reviews-list');
 
-const STORAGE_KEY = 'travlr_photo_reviews';
+const LOCAL_META_KEY = 'travlr_local_meta'; // client-only: spotName + imageData
 let currentBase64Image = '';
 
-function loadReviews() {
-  const savedData = localStorage.getItem(STORAGE_KEY);
-  return savedData ? JSON.parse(savedData) : [];
+
+async function loadServerEntries() {
+  const res = await fetch(API + "/entries");
+  if (!res.ok) {
+    showStatus('Could not load saved reviews.', false);
+    return [];
+  }
+  return res.json(); 
 }
 
-function saveReviewsToStorage(reviews) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+async function saveTextToServer(text) {
+  const res = await fetch(API + "/entries", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ text }),
+  });
+  if (!res.ok) {
+    const reason = await res.text();
+    showStatus('Could not save: ' + (reason || res.status), false);
+    return false;
+  }
+  return true;
 }
 
-function renderReviews() {
+function loadLocalMeta() {
+  const saved = localStorage.getItem(LOCAL_META_KEY);
+  return saved ? JSON.parse(saved) : [];
+}
+
+function appendLocalMeta(spotName, imageData) {
+  const meta = loadLocalMeta();
+  meta.push({ spotName, imageData });
+  localStorage.setItem(LOCAL_META_KEY, JSON.stringify(meta));
+}
+
+async function renderReviews() {
   reviewsList.textContent = '';
-  const reviews = loadReviews();
+  const entries = await loadServerEntries();
+  const localMeta = loadLocalMeta();
 
-  if (reviews.length === 0) {
+  if (entries.length === 0) {
     emptyState.classList.remove('hidden');
     return;
   }
 
   emptyState.classList.add('hidden');
 
-  reviews.forEach((review) => {
+  entries.forEach((entry, index) => {
+
+    const meta = localMeta[index];
+
     const card = document.createElement('li');
     card.className = 'review-card';
 
-    const title = document.createElement('h3');
-    title.className = 'review-card-title';
-    title.textContent = review.spotName;
+    if (meta && meta.spotName) {
+      const title = document.createElement('h3');
+      title.className = 'review-card-title';
+      title.textContent = meta.spotName;
+      card.appendChild(title);
+    }
 
-    const img = document.createElement('img');
-    img.className = 'review-card-img';
-    img.src = review.imageData;
-    img.alt = `Photo of ${review.spotName}`;
+    if (meta && meta.imageData) {
+      const img = document.createElement('img');
+      img.className = 'review-card-img';
+      img.src = meta.imageData;
+      img.alt = `Photo of ${meta.spotName || 'saved spot'}`;
+      card.appendChild(img);
+    }
 
     const text = document.createElement('p');
     text.className = 'review-card-text';
-    text.textContent = review.reviewText;
-
-    card.appendChild(title);
-    card.appendChild(img);
+    text.textContent = entry.text;
     card.appendChild(text);
 
     reviewsList.appendChild(card);
@@ -97,7 +133,7 @@ spotImageInput.addEventListener('change', (event) => {
   }
 });
 
-reviewForm.addEventListener('submit', (event) => {
+reviewForm.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   const spotName = spotNameInput.value.trim();
@@ -108,18 +144,11 @@ reviewForm.addEventListener('submit', (event) => {
     return;
   }
 
-  const newReview = {
-    id: Date.now(),
-    spotName: spotName,
-    imageData: currentBase64Image,
-    reviewText: reviewText,
-    createdAt: new Date().toISOString()
-  };
-
   try {
-    const reviews = loadReviews();
-    reviews.unshift(newReview);
-    saveReviewsToStorage(reviews);
+    const ok = await saveTextToServer(reviewText);
+    if (!ok) return;
+    
+    appendLocalMeta(spotName, currentBase64Image);
 
     spotNameInput.value = '';
     spotImageInput.value = '';
@@ -128,9 +157,10 @@ reviewForm.addEventListener('submit', (event) => {
     imagePreviewContainer.classList.add('hidden');
 
     showStatus('Photo review saved successfully!', true);
-    renderReviews();
+    await renderReviews();
   } catch (error) {
-    showStatus('Failed to save review. The photo file may be too large.', false);
+
+    showStatus('Could not reach the server. Please try again.', false);
   }
 });
 
