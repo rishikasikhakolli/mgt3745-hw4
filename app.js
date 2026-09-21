@@ -28,6 +28,7 @@ const reviewsList = document.getElementById('reviews-list');
 const LOCAL_META_KEY = 'travlr_local_meta'; // client-only: spotName + imageData
 let currentBase64Image = '';
 
+// ---- server text entries: through the Worker -----------------------------
 
 async function loadServerEntries() {
   const res = await fetch(API + "/entries");
@@ -35,7 +36,7 @@ async function loadServerEntries() {
     showStatus('Could not load saved reviews.', false);
     return [];
   }
-  return res.json(); 
+  return res.json(); // ordered oldest-first, each { id, text, created_at }
 }
 
 async function saveTextToServer(text) {
@@ -52,6 +53,8 @@ async function saveTextToServer(text) {
   return true;
 }
 
+// ---- local metadata: client-side only, lost on a cleared cache ----------
+
 function loadLocalMeta() {
   const saved = localStorage.getItem(LOCAL_META_KEY);
   return saved ? JSON.parse(saved) : [];
@@ -62,6 +65,8 @@ function appendLocalMeta(spotName, imageData) {
   meta.push({ spotName, imageData });
   localStorage.setItem(LOCAL_META_KEY, JSON.stringify(meta));
 }
+
+// ---- render: merges server text with local metadata by position ---------
 
 async function renderReviews() {
   reviewsList.textContent = '';
@@ -76,7 +81,10 @@ async function renderReviews() {
   emptyState.classList.add('hidden');
 
   entries.forEach((entry, index) => {
-
+    // Server entries are chronological; local metadata is chronological
+    // too, so they line up by index for THIS browser. If the cache was
+    // cleared, localMeta is empty/shorter and meta will be undefined here
+    // -- that's the expected, honest loss of spot name/photo.
     const meta = localMeta[index];
 
     const card = document.createElement('li');
@@ -146,8 +154,10 @@ reviewForm.addEventListener('submit', async (event) => {
 
   try {
     const ok = await saveTextToServer(reviewText);
-    if (!ok) return;
-    
+    if (!ok) return; // saveTextToServer already showed the error
+
+    // Only reached if the server accepted the text -- keep local metadata
+    // in sync with what actually got persisted server-side.
     appendLocalMeta(spotName, currentBase64Image);
 
     spotNameInput.value = '';
@@ -159,7 +169,7 @@ reviewForm.addEventListener('submit', async (event) => {
     showStatus('Photo review saved successfully!', true);
     await renderReviews();
   } catch (error) {
-
+    // The network itself failed (offline, DNS, CORS). fetch throws here.
     showStatus('Could not reach the server. Please try again.', false);
   }
 });
