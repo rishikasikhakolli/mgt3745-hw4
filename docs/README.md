@@ -7,3 +7,5 @@ Recording a GIF: the Codespace browser tab plus any screen recorder; export
 under 5 MB so GitHub renders it inline.
 
 <img width="800" height="429" alt="ScreenRecording2026-09-17at12 03 48PM-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/7cac7b6f-7c96-46ad-aaf6-1ad9a1754c1b" />
+
+<img width="800" height="429" alt="ScreenRecording2026-09-22at12 59 06PM-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/468e4274-0680-4ced-9701-9350fe5bed9a" />
