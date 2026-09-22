@@ -6,7 +6,7 @@
 
 ## What
 
-*HW3 repository: [link it here](https://github.com/YOUR-USER/mgt3745-hw3)*
+*HW3 repository: [link it here]([(https://github.com/rishikasikhakolli/mgt3745-hw3])*
 
 *One paragraph naming the problem, the user, and the feature, with links to
 [PROJECT.md](context/PROJECT.md) and [FEATURES.md](context/FEATURES.md).
@@ -31,7 +31,7 @@ flowchart LR
 
 ## How to Run
 
-Deployed: *`https://mgt3745-hw4.YOUR-SUBDOMAIN.workers.dev/entries`*
+Deployed: *`https://mgt3745-hw4.travlr.workers.dev/entries`*
 
 From a fresh Codespace:
 
