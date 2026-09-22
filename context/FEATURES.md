@@ -31,8 +31,12 @@
 
 | Feature | Kano | Status |
 |---|---|---|
-| *Save and list entries* | *Basic* | *Built (HW3), server-backed (HW4)* |
-| *...* | | |
+| *Category-Based Ranking* | *Must-be* | *Not yet built* |
+| *Text Reviews* | *Must-be* | *Built (HW3), server-backed (HW4)* |
+| *Upload/Sharing* | *Performance* | *Not yet built* |
+| *"Traveled with"* | *Attractive* | *Not yet built* |
+| *Activity Feed* | *Indifferent* | *Not yet built* |
+| *In-App Photo Editing* | *Indifferent* | *Not yet built* |
 
 ## Acceptance criteria (EARS)
 
