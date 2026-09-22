@@ -13,11 +13,6 @@
 One sentence on where data now lives and why (ADR-002).*
 
 ## See It Work
-
-*A GIF or screenshot in `/docs` showing an entry surviving a cleared cache
-or appearing in a second browser. Evidence and storefront at once.*
-
-![See it work](docs/see-it-work.gif)
 <img width="800" height="429" alt="ScreenRecording2026-09-22at12 59 06PM-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/468e4274-0680-4ced-9701-9350fe5bed9a" />
 
 
