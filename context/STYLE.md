@@ -1,40 +1,39 @@
 ---
 # Tokens: what a machine reads. Replace every value with one pulled from the
 # interface you admire. Guess the hex; precision is HW5's problem.
-color-primary: "#051E39"
-color-accent: "#B39051"
+color-primary: "#DD2A7B"
+color-accent: "#00C853"
 color-background: "#FFFFFF"
 color-text: "#1A1A1A"
 font-body: "Roboto"
-font-heading: "Roboto Slab"
-font-size-min: 14px
-space-unit: 8px
-radius: 4px
+font-heading: "Instagram Sans (?)"
+# font-size-min: 14px
+# space-unit: 8px
+# radius: 4px
 ---
 
 # STYLE.md
 
-Tokens above, rationale below. The frontmatter is what a machine reads; this
-body is what a human reads. One sentence per token. "Looks clean" is fog;
-"gold fails contrast on white at body size" is at altitude.
+# Tokens above, rationale below. The frontmatter is what a machine reads; this body is what a human reads. One sentence per token. "Looks clean" is fog; "gold fails contrast on white at body size" is at altitude.
 
 ## Rationale
 
-- **color-primary**: *why this color, for this audience*
-- **color-accent**: *where it is allowed and where it is not*
-- **font-body / font-heading**: *one family per role, because two is a decision and three is a mess*
-- **space-unit**: *so nothing is eyeballed*
-- **font-size-min**: *who cannot read anything smaller*
+- **color-primary**: Bright colors draws eyes directly to buttons and unread Story rings so key actions pop against the plain background. Most of Instagram's demographic appreciate pops of color and are enthralled by it.
+- **color-accent**: The green is used for different things highlighted (close friends). In addition, the blue of @ mentions pops against the black text more commonly seen.
+- **font-body / font-heading**: The body text is very clean and easy to read, no fluff. The logo is more complex and scripture like, but only used on the top of the home page.
+- **space-unit**: Margins and grid spacing is all uniform.
+- **font-size-min**: Text is legible to most people, it is probably a uniform studied size that is appropriate for the general audience.
 
 ## Refusals
 
 Things this interface will never do, and why. Taken from the interface you
 resent. Name the Law of UX it breaks (lawsofux.com).
 
-1. *No modals for anything the user did not ask for. Breaks: ...*
-2. *...*
+1. No small or confusing buttons. ***Breaks:** Fitts's Law because small buttons increase errors and make buttons harder to hit fast.*
+3. No cluttered sidebars packed with numerous buttons. ***Breaks:** Hick's Law by overwhelming users with competing choices.*
+4. No hidden or confusing layout changes. ***Breaks:** Jakob's Law by ignoring consistent design patterns users expect.*
 
 ## Sources
 
-- Admired: *name, screenshot in /docs*
-- Resented: *name, screenshot in /docs*
+- **Admired:** Instagram
+- **Resented:** Reddit
