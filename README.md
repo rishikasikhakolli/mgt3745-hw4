@@ -58,13 +58,6 @@ Reading order for a stranger: [PROJECT.md](context/PROJECT.md) →
 
 ## AI Use
 
-*Three proto-DDR questions. What did the agent write? What did you check,
-and how? What could you not fully verify, and what did you do about it?
-For the Worker specifically: name the thing you could not fully inspect.
-Hours spent: ___.*
-
-## AI Use
-
 I used Claude to help write the Worker's added validation rule and wire `app.js`'s `load`/`save` functions to fetch calls.
 
 **What did the agent write?** The whitespace-rejection validation rule in `worker.js` (`if (!body.text || !body.text.trim())`), and the fetch-based rewrite of `app.js`'s `load`/`save`/`render` functions, including the client-side metadata layer that keeps spot name and photo alongside the server-stored review text.
