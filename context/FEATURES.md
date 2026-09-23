@@ -44,7 +44,7 @@
 - WHEN a valid entry is submitted, THE SYSTEM SHALL store it and confirm.
 - IF the entry text is missing, THEN THE SYSTEM SHALL reject it and say why.
 - IF the server cannot be reached, THEN THE SYSTEM SHALL tell the user on the page.
-- *Add the unwanted-behavior statement your HW4 validation rule implements.*
+- IF the entry text is empty or contains only whitespace, THEN THE SYSTEM SHALL reject it and say why.
 
 ## Verification
 
@@ -52,10 +52,10 @@ Walk every statement against the deployed page. PASS, FAIL, CANNOT TEST YET, or 
 
 | Statement | HW3 verdict | HW4 verdict | Reason |
 |---|---|---|---|
-| Return entries in order | PASS | *?* | |
-| Store valid entry | PASS | *?* | |
-| Reject missing text | *?* | *?* | |
-| Survive cleared cache | CANNOT TEST YET | *?* | *now testable* |
-| Server unreachable | | *?* | *how would you simulate an outage?* |
-| Server returns 500 | | *?* | |
-| Second client writes to the same table | | *?* | *DEFERRED if ADR-002 says so* |
+| Return entries in order | PASS | PASS | |
+| Store valid entry | PASS | PASS | |
+| Reject missing text | PASS | PASS | |
+| Survive cleared cache | CANNOT TEST YET | PASS | Loaded the page from a private window with no local data and the review text loaded from D1 via the Worker, not localStorage. |
+| Server unreachable | | CANNOT TEST YET | I don't yet have a reliable way to simulate a true network outage from inside Codespaces. |
+| Server returns 500 | | PASS | |
+| Second client writes to the same table | | DEFERRED | ADR-002 says so |
