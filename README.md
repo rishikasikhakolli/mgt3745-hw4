@@ -66,3 +66,15 @@ Reading order for a stranger: [PROJECT.md](context/PROJECT.md) →
 and how? What could you not fully verify, and what did you do about it?
 For the Worker specifically: name the thing you could not fully inspect.
 Hours spent: ___.*
+
+## AI Use
+
+I used Claude to help write the Worker's added validation rule and wire `app.js`'s `load`/`save` functions to fetch calls.
+
+**What did the agent write?** The whitespace-rejection validation rule in `worker.js` (`if (!body.text || !body.text.trim())`), and the fetch-based rewrite of `app.js`'s `load`/`save`/`render` functions, including the client-side metadata layer that keeps spot name and photo alongside the server-stored review text.
+
+**What did I check, and how?** I read every line before deploying, and manually traced the Worker's POST path against `schema.sql`. I tested the empty/whitespace rejection by submitting blank and space-only reviews.
+
+**What could I not fully verify, and what did I do about it?** I did not fully verify that matching local photo/spot-name metadata to server entries by array position would stay correct. After a few submissions, photos and spot names appeared attached to the wrong review text on screen. I diagnosed this myself, then had Claude help me change the approach to key metadata by the server-assigned entry `id` (returned from the Worker's INSERT via `result.meta.last_row_id`) instead of by array position, which fixed the mismatch.
+
+**Hours spent:** ~9
