@@ -4,11 +4,14 @@
 // is intentionally one column: text). Spot name and photo are NOT part of
 // that schema this round (see schema.sql comment: "a second table is
 // ADR-003 territory"), so they're kept in localStorage as a client-side
-// convenience only. They will NOT survive a cleared cache; only the
-// review text will. That boundary is the point of this assignment.
+// convenience only, keyed by the server-assigned entry id so each photo/
+// spot name stays matched to the correct review even if entries are
+// added, reloaded, or come back in a different order. Local metadata will
+// NOT survive a cleared cache; only the review text will. That boundary
+// is the point of this assignment.
 
 // Paste your deployed Worker URL here after `npx wrangler deploy`.
-const API = "https://mgt3745-hw4.YOUR-SUBDOMAIN.workers.dev";
+const API = "https://mgt3745-hw4.travlr.workers.dev";
 
 // ---- HW3, for the record (superseded by ADR-002) ------------------------
 // function load()      { return JSON.parse(localStorage.getItem("entries") || "[]"); }
@@ -25,7 +28,7 @@ const saveStatus = document.getElementById('save-status');
 const emptyState = document.getElementById('empty-state');
 const reviewsList = document.getElementById('reviews-list');
 
-const LOCAL_META_KEY = 'travlr_local_meta'; // client-only: spotName + imageData
+const LOCAL_META_KEY = 'travlr_local_meta'; // client-only: keyed by entry id
 let currentBase64Image = '';
 
 // ---- server text entries: through the Worker -----------------------------
@@ -48,25 +51,26 @@ async function saveTextToServer(text) {
   if (!res.ok) {
     const reason = await res.text();
     showStatus('Could not save: ' + (reason || res.status), false);
-    return false;
+    return null;
   }
-  return true;
+  const { id } = await res.json();
+  return id;
 }
 
-// ---- local metadata: client-side only, lost on a cleared cache ----------
+// ---- local metadata: client-side only, keyed by server id ---------------
 
 function loadLocalMeta() {
   const saved = localStorage.getItem(LOCAL_META_KEY);
-  return saved ? JSON.parse(saved) : [];
+  return saved ? JSON.parse(saved) : {};
 }
 
-function appendLocalMeta(spotName, imageData) {
+function setLocalMeta(id, spotName, imageData) {
   const meta = loadLocalMeta();
-  meta.push({ spotName, imageData });
+  meta[id] = { spotName, imageData };
   localStorage.setItem(LOCAL_META_KEY, JSON.stringify(meta));
 }
 
-// ---- render: merges server text with local metadata by position ---------
+// ---- render: matches server text to local metadata by id ----------------
 
 async function renderReviews() {
   reviewsList.textContent = '';
@@ -80,12 +84,10 @@ async function renderReviews() {
 
   emptyState.classList.add('hidden');
 
-  entries.forEach((entry, index) => {
-    // Server entries are chronological; local metadata is chronological
-    // too, so they line up by index for THIS browser. If the cache was
-    // cleared, localMeta is empty/shorter and meta will be undefined here
-    // -- that's the expected, honest loss of spot name/photo.
-    const meta = localMeta[index];
+  entries.forEach((entry) => {
+    // Matched by the server's actual id -- not by position -- so cards
+    // can't drift out of alignment with each other.
+    const meta = localMeta[entry.id];
 
     const card = document.createElement('li');
     card.className = 'review-card';
@@ -153,12 +155,12 @@ reviewForm.addEventListener('submit', async (event) => {
   }
 
   try {
-    const ok = await saveTextToServer(reviewText);
-    if (!ok) return; // saveTextToServer already showed the error
+    const id = await saveTextToServer(reviewText);
+    if (id === null) return; // saveTextToServer already showed the error
 
-    // Only reached if the server accepted the text -- keep local metadata
-    // in sync with what actually got persisted server-side.
-    appendLocalMeta(spotName, currentBase64Image);
+    // Only reached if the server accepted the text -- key local metadata
+    // by the id the server actually assigned it.
+    setLocalMeta(id, spotName, currentBase64Image);
 
     spotNameInput.value = '';
     spotImageInput.value = '';
