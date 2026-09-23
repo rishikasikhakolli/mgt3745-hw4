@@ -1,7 +1,5 @@
 # PROJECT.md
 
-Your HW1 problem framing, graduated to its permanent home. Copy it in from HW3.
-
 ## Problem statement
 
 Traveling is one of people's most beloved hobbies, and is a time where they are constantly taking pictures to share with the world. However, in this day and age, social media is more judgemental of the content you post. Certain platforms are too formal, while others are too serious. For example, I take trips often and love sharing about them with my friends on social and text, but I never get to simply put my thoughts out there in a quick way and often forget details since they were never recorded.
@@ -15,7 +13,6 @@ Traveling is one of people's most beloved hobbies, and is a time where they are 
 
 ## Scope
 
-*In: ... Out: ... Deferred: ...*
 * **In:** photo + text reviews that can be saved and listed, with review text now persisted server-side via Cloudflare 
 * **Out:** trip booking and in-app chat (explicit non-goals)
 * **Deferred:** category-based ranking, city ranking/map, "Traveled with" tagging, and shareable links (not built yet), multi-user concurrent-write handling
