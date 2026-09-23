@@ -1,4 +1,4 @@
-# Entries: Data Leaves the Browser
+# Travlr Reviews Leave the Browser
 
 > Replace this title and every *italic prompt* with your own words. Six
 > sections, in this order: What, See It Work, How to Run, Status, Links,
@@ -6,13 +6,9 @@
 
 ## What
 
-**HW3 repository:** https://github.com/rishikasikhakolli/mgt3745-hw3
+**HW3 repository:** `https://github.com/rishikasikhakolli/mgt3745-hw3`
 
 Travlr is a fast, casual photo reviewing app for when a user is vacationing. It allows them to post a photo of anything and everything they did while traveling and prompts them to log a name, photo, and review after visiting it, without the pressure of most social platforms. See [PROJECT.md](context/PROJECT.md) and [FEATURES.md](context/FEATURES.md) for the full spec. As of this week, per [ADR-002](context/ARCHITECTURE.md), the review text now lives in a Cloudflare D1 database behind a Worker instead of the browser's localStorage, so it survives a cleared cache or a switch to another device; the spot name and photo remain client-side only for this iteration.
-
-*One paragraph naming the problem, the user, and the feature, with links to
-[PROJECT.md](context/PROJECT.md) and [FEATURES.md](context/FEATURES.md).
-One sentence on where data now lives and why (ADR-002).*
 
 ## See It Work
 <img width="800" height="429" alt="ScreenRecording2026-09-22at12 59 06PM-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/468e4274-0680-4ced-9701-9350fe5bed9a" />
@@ -29,7 +25,7 @@ flowchart LR
 
 ## How to Run
 
-Deployed: *`https://mgt3745-hw4.travlr.workers.dev/entries`*
+**Deployed:** `https://mgt3745-hw4.travlr.workers.dev/entries`
 
 From a fresh Codespace:
 
@@ -50,6 +46,18 @@ To run the Worker locally instead: `npm run dev` (port 8787, local D1 emulator).
 | *Survive cleared cache* | *THE SYSTEM SHALL return stored entries on any device* | *PASS* |
 | *Network down* | *IF the server is unreachable, THE SYSTEM SHALL tell the user* | *CANNOT TEST YET* |
 | *Two clients, one table* | *...* | *DEFERRED (ADR-002)* |
+
+## Status
+
+| Feature | EARS statement | Verdict |
+|---|---|---|
+| Return entries in order | THE SYSTEM SHALL return all entries in creation order | PASS |
+| Save an entry | WHEN a valid entry is submitted, THE SYSTEM SHALL store it and confirm | PASS |
+| Reject empty entry | IF the entry text is empty or contains only whitespace, THEN THE SYSTEM SHALL reject it and say why | PASS |
+| Survive cleared cache | THE SYSTEM SHALL return stored entries on any device | PASS |
+| All items in review survive cleared cache | THE SYSTEM SHALL return stored entries on any device | DEFERRED |
+| Network down | IF the server cannot be reached, THEN THE SYSTEM SHALL tell the user on the page | CANNOT TEST YET |
+| Server returns 500 | IF the server errors, THEN THE SYSTEM SHALL tell the user on the page | CANNOT TEST YET |
 
 *Full verification table lives in [FEATURES.md](context/FEATURES.md).*
 
