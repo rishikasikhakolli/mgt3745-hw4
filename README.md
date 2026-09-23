@@ -41,16 +41,6 @@ To run the Worker locally instead: `npm run dev` (port 8787, local D1 emulator).
 
 | Feature | EARS statement | Verdict |
 |---|---|---|
-| *Save an entry* | *WHEN a valid entry is submitted, THE SYSTEM SHALL store it* | *PASS* |
-| *Reject empty entry* | *IF text is missing, THEN THE SYSTEM SHALL reject with a reason* | *PASS* |
-| *Survive cleared cache* | *THE SYSTEM SHALL return stored entries on any device* | *PASS* |
-| *Network down* | *IF the server is unreachable, THE SYSTEM SHALL tell the user* | *CANNOT TEST YET* |
-| *Two clients, one table* | *...* | *DEFERRED (ADR-002)* |
-
-## Status
-
-| Feature | EARS statement | Verdict |
-|---|---|---|
 | Return entries in order | THE SYSTEM SHALL return all entries in creation order | PASS |
 | Save an entry | WHEN a valid entry is submitted, THE SYSTEM SHALL store it and confirm | PASS |
 | Reject empty entry | IF the entry text is empty or contains only whitespace, THEN THE SYSTEM SHALL reject it and say why | PASS |
@@ -58,6 +48,7 @@ To run the Worker locally instead: `npm run dev` (port 8787, local D1 emulator).
 | All items in review survive cleared cache | THE SYSTEM SHALL return stored entries on any device | DEFERRED |
 | Network down | IF the server cannot be reached, THEN THE SYSTEM SHALL tell the user on the page | CANNOT TEST YET |
 | Server returns 500 | IF the server errors, THEN THE SYSTEM SHALL tell the user on the page | CANNOT TEST YET |
+| Two clients, one table | Concurrent writes from separate clients are handled safely | DEFERRED (ADR-002) |
 
 *Full verification table lives in [FEATURES.md](context/FEATURES.md).*
 
