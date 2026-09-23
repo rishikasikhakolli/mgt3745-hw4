@@ -8,7 +8,9 @@ Traveling is one of people's most beloved hobbies, and is a time where they are 
 
 ## Who it is for
 
-*Primary and secondary users. Details in USERS.md.*
+* **Primary:** casual travelers who want a low-pressure way to share trip highlights with friends without frequent public posting. 
+* **Secondary:** active social media users who want an aesthetic, in-depth alternative to typical short-form travel content.
+**Details in [USERS.md](USERS.md).**
 
 ## Scope
 
