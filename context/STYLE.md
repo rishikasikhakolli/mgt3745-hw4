@@ -14,8 +14,6 @@ font-heading: "Instagram Sans (?)"
 
 # STYLE.md
 
-# Tokens above, rationale below. The frontmatter is what a machine reads; this body is what a human reads. One sentence per token. "Looks clean" is fog; "gold fails contrast on white at body size" is at altitude.
-
 ## Rationale
 
 - **color-primary**: Bright colors draws eyes directly to buttons and unread Story rings so key actions pop against the plain background. Most of Instagram's demographic appreciate pops of color and are enthralled by it.
@@ -25,9 +23,6 @@ font-heading: "Instagram Sans (?)"
 - **font-size-min**: Text is legible to most people, it is probably a uniform studied size that is appropriate for the general audience.
 
 ## Refusals
-
-Things this interface will never do, and why. Taken from the interface you
-resent. Name the Law of UX it breaks (lawsofux.com).
 
 1. No small or confusing buttons. ***Breaks:** Fitts's Law because small buttons increase errors and make buttons harder to hit fast.*
 3. No cluttered sidebars packed with numerous buttons. ***Breaks:** Hick's Law by overwhelming users with competing choices.*
